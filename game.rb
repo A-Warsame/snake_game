@@ -4,7 +4,7 @@ require_relative 'ui'
 require_relative 'input_handler'
 
 class Game
-  attr_reader :input, :ui
+  attr_reader :input, :ui, :logic
 
   def initialize
     @logic = GameLogic.new

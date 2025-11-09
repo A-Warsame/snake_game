@@ -5,7 +5,7 @@ class InputHandler
   include Ruby2D::DSL
   def initialize(game_logic)
     @game_logic = game_logic
-    @snake = Square.new(x: 10, y: 20, size: 25, color: 'red')
+    @snake = Array.new(64, Square.new(x: 10, y: 20, size: 25, color: 'red'))
     @x_speed = 0
     @y_speed = 0
   end
@@ -30,23 +30,36 @@ class InputHandler
   end
 
   def re_enter_window
+    head = @snake.first
+    new_x = head.x + @x_speed
+    new_y = head.y + @y_speed
 
-    if @snake.x < 0
-      @snake.x = WINDOW_WIDTH
-    elsif @snake.x > WINDOW_WIDTH
-      @snake.x = 0
+    if new_x < 0
+      new_head = Square.new(x: WINDOW_WIDTH, y: new_y, size: 25, color: 'red')
+      @snake.unshift(new_head)
+    elsif new_x > WINDOW_WIDTH
+      new_head = Square.new(x: 0, y: new_y, size: 25, color: 'red')
+      @snake.unshift(new_head)
     end
 
-    if @snake.y < 0
-      @snake.y = WINDOW_HEIGHT
-    elsif @snake.y > WINDOW_HEIGHT
-      @snake.y = 0
+    if new_y < 0
+      new_head = Square.new(x: new_x, y: WINDOW_HEIGHT, size: 25, color: 'red')
+      @snake.unshift(new_head)
+    elsif new_y > WINDOW_HEIGHT
+      new_head = Square.new(x: new_x, y: 0, size: 25, color: 'red')
+      @snake.unshift(new_head)
     end
   end
 
   def move_snake
-    @snake.x += @x_speed
-    @snake.y += @y_speed
+    head = @snake.first
+    new_x = head.x + @x_speed
+    new_y = head.y + @y_speed
+    new_head = Square.new(x: new_x, y: new_y, size: 25, color: 'red')
+    @snake.unshift(new_head)
+
+    tail = @snake.pop
+    tail.remove
     re_enter_window
   end
 end
