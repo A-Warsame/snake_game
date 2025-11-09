@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 require 'ruby2d'
 class InputHandler
   include Ruby2D::DSL
@@ -28,10 +27,27 @@ class InputHandler
     end
   end
 
+  def re_enter_window
+
+    if @snake.x < 0
+      @snake.x = 640
+    elsif @snake.x > 640
+      @snake.x = 0
+    end
+
+    if @snake.y < 0
+      @snake.y = 480
+    elsif @snake.y > 480
+      @snake.y = 0
+    end
+  end
+
   def move_snake
     update do
       @snake.x += @x_speed
       @snake.y += @y_speed
+      re_enter_window
     end
   end
+
 end

@@ -2,7 +2,6 @@ require 'ruby2d'
 require_relative 'game_logic'
 require_relative 'ui'
 require_relative 'input_handler'
-
 class Game
   def initialize
     @logic = GameLogic.new
