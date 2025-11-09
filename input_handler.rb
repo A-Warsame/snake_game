@@ -5,7 +5,7 @@ class InputHandler
   include Ruby2D::DSL
   def initialize(game_logic)
     @game_logic = game_logic
-    @snake = Array.new(64, Square.new(x: 10, y: 20, size: 25, color: 'red'))
+    @snake = Array.new(64, Square.new(x: 10, y: 20, size: 20, color: 'red'))
     @x_speed = 0
     @y_speed = 0
   end
@@ -28,29 +28,6 @@ class InputHandler
       end
     end
   end
-
-  def re_enter_window
-    head = @snake.first
-    new_x = head.x + @x_speed
-    new_y = head.y + @y_speed
-
-    if new_x < 0
-      new_head = Square.new(x: WINDOW_WIDTH, y: new_y, size: 25, color: 'red')
-      @snake.unshift(new_head)
-    elsif new_x > WINDOW_WIDTH
-      new_head = Square.new(x: 0, y: new_y, size: 25, color: 'red')
-      @snake.unshift(new_head)
-    end
-
-    if new_y < 0
-      new_head = Square.new(x: new_x, y: WINDOW_HEIGHT, size: 25, color: 'red')
-      @snake.unshift(new_head)
-    elsif new_y > WINDOW_HEIGHT
-      new_head = Square.new(x: new_x, y: 0, size: 25, color: 'red')
-      @snake.unshift(new_head)
-    end
-  end
-
   def move_snake
     head = @snake.first
     new_x = head.x + @x_speed
@@ -60,6 +37,18 @@ class InputHandler
 
     tail = @snake.pop
     tail.remove
-    re_enter_window
+    re_enter_window(@snake.first)
+  end
+  def re_enter_window(segment)
+    if segment.x < 0
+      segment.x = WINDOW_WIDTH
+    elsif segment.x > WINDOW_WIDTH
+      segment.x = 0
+    end
+    if segment.y < 0
+      segment.y = WINDOW_HEIGHT
+    elsif segment.y > WINDOW_HEIGHT
+      segment.y = 0
+    end
   end
 end
