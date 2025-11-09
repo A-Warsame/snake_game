@@ -1,4 +1,6 @@
 require 'ruby2d'
+WINDOW_WIDTH = 640
+WINDOW_HEIGHT = 480
 class InputHandler
   include Ruby2D::DSL
   def initialize(game_logic)
@@ -30,24 +32,21 @@ class InputHandler
   def re_enter_window
 
     if @snake.x < 0
-      @snake.x = 640
-    elsif @snake.x > 640
+      @snake.x = WINDOW_WIDTH
+    elsif @snake.x > WINDOW_WIDTH
       @snake.x = 0
     end
 
     if @snake.y < 0
-      @snake.y = 480
-    elsif @snake.y > 480
+      @snake.y = WINDOW_HEIGHT
+    elsif @snake.y > WINDOW_HEIGHT
       @snake.y = 0
     end
   end
 
   def move_snake
-    update do
-      @snake.x += @x_speed
-      @snake.y += @y_speed
-      re_enter_window
-    end
+    @snake.x += @x_speed
+    @snake.y += @y_speed
+    re_enter_window
   end
-
 end
