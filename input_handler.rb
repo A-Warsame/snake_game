@@ -10,29 +10,29 @@ class InputHandler
     @y_speed = 0
   end
 
-  def start
+  def user_input
     on :key_down do |event|
       case event.key
       when 'up'
-        @y_speed = -2
+        @y_speed = -2 if @y_speed != 2
         @x_speed = 0
       when 'down'
-        @y_speed = 2
+        @y_speed = 2 if @y_speed != -2
         @x_speed = 0
       when 'left'
-        @x_speed = -2
+        @x_speed = -2 if @x_speed != 2
         @y_speed = 0
       when 'right'
-        @x_speed = 2
+        @x_speed = 2 if @x_speed != -2
         @y_speed = 0
       end
     end
   end
   def move_snake
     head = @snake.first
-    new_x = head.x + @x_speed
-    new_y = head.y + @y_speed
-    new_head = Square.new(x: new_x, y: new_y, size: 25, color: 'red')
+    head.x += @x_speed
+    head.y += @y_speed
+    new_head = Square.new(x: head.x, y: head.y, size: 20, color: 'red')
     @snake.unshift(new_head)
 
     tail = @snake.pop

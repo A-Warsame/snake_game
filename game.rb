@@ -10,7 +10,7 @@ class Game
     @logic = GameLogic.new
     @ui = UI.new(@logic)
     @input = InputHandler.new(@logic)
-    @input.start
+    @input.user_input
   end
 end
 
