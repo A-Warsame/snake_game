@@ -4,16 +4,36 @@ class GameLogic
   attr_reader :snake
   def initialize
     @snake = []
-    @food = Circle.new(x: rand(WINDOW_WIDTH), y: rand(WINDOW_HEIGHT), radius: 10, sectors: 32, color: 'fuchsia', z: 10)
+    @food = Square.new(x: rand(GRID_WIDTH) * GRID_SIZE, y: rand(GRID_HEIGHT) * GRID_SIZE, size: GRID_SIZE, color: 'yellow')
   end
-  def start; end
+  def start
+  end
   def spawn_food
-    # spawn food at random location
+    @food = Square.new(x: rand(GRID_WIDTH) * GRID_SIZE, y: rand(GRID_HEIGHT) * GRID_SIZE, size: GRID_SIZE, color: 'yellow')
   end
-  def check_collision
-    # check if snake collides with food
+  def check_collision (snake)
+
+    head = snake.first
+
+    if hit(head, @food)
+      new_segment = Square.new(x: head.x, y: head.y, size: GRID_SIZE, color: 'red')
+      snake << new_segment
+
+      spawn_food
+
+      @food.add
+      @ate_food = true
+    else
+      @ate_food = false
+    end
+
     # check if snake collides with itself
-    # check if snake goes out of bounds
+  end
+  def hit(a, b)
+    a.x < b.x + b.size &&
+      a.x + a.size > b.x &&
+      a.y < b.y + b.size &&
+      a.y + a.size > b.y
   end
 
 end

@@ -18,6 +18,9 @@ game = Game.new
 
 update do
   game.input.move_snake
+
+  game.logic.check_collision(game.input.instance_variable_get(:@snake))
+
   game.ui.draw
 end
 

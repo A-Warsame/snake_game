@@ -1,11 +1,14 @@
 require 'ruby2d'
 WINDOW_WIDTH = 640
 WINDOW_HEIGHT = 480
+GRID_SIZE = 20
+GRID_WIDTH = WINDOW_WIDTH / GRID_SIZE
+GRID_HEIGHT = WINDOW_HEIGHT / GRID_SIZE
 class InputHandler
   include Ruby2D::DSL
   def initialize(game_logic)
     @game_logic = game_logic
-    @snake = Array.new(64, Square.new(x: 10, y: 20, size: 20, color: 'red'))
+    @snake = Array.new(GRID_SIZE, Square.new(x: GRID_WIDTH, y: GRID_HEIGHT, size: GRID_SIZE, color: 'red'))
     @x_speed = 0
     @y_speed = 0
   end
